@@ -11,137 +11,248 @@
   <link rel="apple-touch-icon" sizes="180x180" href="favicon-180x180.png">
   <link rel="shortcut icon" href="favicon.ico">
 
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
   <style>
-    :root {
-      --deep-blue: #226286;
-      --accent-blue: #2E9CEC;
-      --background-light: #F4F7FA;
-      --text-dark: #333333;
-      --highlight: #00B9F0;
-    }
-
     body {
-      margin: 0;
-      font-family: 'Inter', sans-serif;
-      background-color: var(--background-light);
-      color: var(--text-dark);
-      line-height: 1.6;
+      font-family: 'Poppins', sans-serif;
+      scroll-behavior: smooth;
+      position: relative;
     }
-
-    header {
-      background-color: var(--deep-blue);
+    .navbar {
+      background-color: #226386;
+    }
+    .navbar-brand img {
+      height: 40px;
+      width: auto;
+      margin-right: 10px;
+      transition: all 0.3s ease;
+    }
+    @media (max-width: 576px) {
+      .navbar-brand img {
+        height: 30px;
+      }
+      .navbar-brand span {
+        font-size: 1rem;
+      }
+    }
+    .navbar-brand span {
+      color: #fff;
+      font-weight: 600;
+      font-size: 1.25rem;
+      vertical-align: middle;
+    }
+    .hero {
+      background: linear-gradient(rgba(34, 99, 134, 0.8), rgba(34, 99, 134, 0.8)), url('https://images.unsplash.com/photo-1556767576-5ec41e3239e3?auto=format&fit=crop&w=1350&q=80');
+      background-size: cover;
+      background-position: center;
       color: white;
-      padding: 60px 20px;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: center;
-      gap: 40px;
-      flex-wrap: wrap;
-      text-align: left;
-    }
-
-    .logo {
-      max-width: 300px;
-      height: auto;
-    }
-
-    .header-content {
-      max-width: 500px;
-    }
-
-    .header-content h1 {
-      font-size: 2.5rem;
-      margin: 0;
-    }
-
-    .header-content p {
-      font-size: 1.2rem;
-      margin-top: 10px;
-    }
-
-    .section {
-      max-width: 800px;
-      margin: 60px auto;
-      padding: 0 20px;
       text-align: center;
+      padding: 120px 20px;
     }
-
-    .section h2 {
-      color: var(--deep-blue);
+    .hero h1 {
+      font-weight: 600;
+    }
+    .btn-primary {
+      background-color: #226386;
+      border: none;
+    }
+    .feature-icon {
       font-size: 2rem;
+      color: #226386;
     }
-
-    .section p {
-      font-size: 1.1rem;
-      color: var(--text-dark);
-    }
-
-    .contact-info {
-      background-color: white;
-      padding: 40px;
-      border-radius: 8px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-      max-width: 600px;
-      margin: 0 auto 60px auto;
+    .section-title {
+      font-weight: 600;
+      color: #226386;
+      margin-bottom: 40px;
       text-align: center;
     }
-
-    .contact-info h2 {
-      color: var(--deep-blue);
-      margin-bottom: 10px;
-    }
-
-    .contact-info p {
-      font-size: 1.1rem;
-    }
-
-    .contact-info a {
-      color: var(--highlight);
-      text-decoration: none;
-      font-weight: bold;
-    }
-
     footer {
+      background-color: #226386;
+      color: #fff;
+      padding: 40px 0;
       text-align: center;
-      padding: 40px 20px;
+      position: relative;
+    }
+    #scrollTopBtn {
+      display: none;
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      z-index: 99;
+      border: none;
+      outline: none;
+      background-color: #226386;
+      color: white;
+      cursor: pointer;
+      padding: 12px 16px;
+      border-radius: 50%;
+      font-size: 20px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      transition: background-color 0.3s ease;
+    }
+    #scrollTopBtn:hover {
+      background-color: #174d66;
+    }
+    .copy-toast {
+      position: fixed;
+      bottom: 80px;
+      right: 30px;
+      background: #226386;
+      color: #fff;
+      padding: 10px 16px;
+      border-radius: 8px;
       font-size: 0.9rem;
-      color: #777;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+    .copy-toast.show {
+      opacity: 1;
+      transform: translateY(0);
     }
   </style>
 </head>
 <body>
-
-  <header>
-    <img src="JMRV_Logo.png" alt="JMRV Solutions Logo" class="logo">
-    <div class="header-content">
-      <h1>JMRV Solutions</h1>
-      <p>Strategic insight. Data-driven growth. Human-first outcomes.</p>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center fw-bold" href="#">
+        <img src="JMRV_Logo.png" alt="JMRV Solutions Logo">
+        <span>JMRV Solutions</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="#features">Features</a></li>
+          <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
+          <li class="nav-item"><a class="nav-link" href="#testimonials">Testimonials</a></li>
+          <li class="nav-item"><a class="nav-link" href="#footer">Contact</a></li>
+        </ul>
+      </div>
     </div>
-  </header>
+  </nav>
 
-  <section class="section">
-    <h2>What We Do</h2>
-    <p>We help growing organizations streamline their operations, amplify their talent strategy, and unlock insights from data — all while keeping people at the center. Whether you're scaling your team or your product, JMRV Solutions brings clarity and structure to your next phase of growth.</p>
+  <!-- Hero Section -->
+  <section class="hero d-flex flex-column justify-content-center align-items-center text-center" data-aos="fade-up">
+    <h1 class="display-4">Consultative Solutions For Any Business Need</h1>
+    <p class="lead mt-3">Expert insight and custom strategies to help your business thrive.</p>
+    <a href="#services" class="btn btn-light mt-4">Learn More</a>
   </section>
 
-  <section class="section">
-    <h2>Why Work With Us</h2>
-    <p>We blend systems thinking with human empathy — combining analytics, automation, and strategic support to create sustainable impact. Our experience spans early-stage startups to enterprise transformations.</p>
+  <!-- Features -->
+  <section id="features" class="py-5" data-aos="fade-up">
+    <div class="container">
+      <h2 class="section-title">Our Core Features</h2>
+      <div class="row text-center">
+        <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+          <div class="feature-icon mb-3">💡</div>
+          <h5>Strategic Consulting</h5>
+          <p>Providing data-driven insights to guide effective business decisions.</p>
+        </div>
+        <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+          <div class="feature-icon mb-3">⚙️</div>
+          <h5>Operational Excellence</h5>
+          <p>Streamlining processes for efficiency and sustainable growth.</p>
+        </div>
+        <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+          <div class="feature-icon mb-3">📊</div>
+          <h5>Analytics & Reporting</h5>
+          <p>Transforming data into actionable intelligence for your team.</p>
+        </div>
+      </div>
+    </div>
   </section>
 
-  <section class="contact-info">
-    <h2>Get in Touch</h2>
-    <p>We’d love to hear from you. Reach out anytime at:<br>
-    <a href="mailto:hello@jmrvsolutions.com">hello@jmrvsolutions.com</a></p>
+  <!-- Services/About -->
+  <section id="services" class="bg-light py-5" data-aos="fade-up">
+    <div class="container">
+      <h2 class="section-title">What We Do</h2>
+      <div class="row align-items-center">
+        <div class="col-md-6" data-aos="fade-right">
+          <img src="https://images.unsplash.com/photo-1556761175-4b46a572b786?auto=format&fit=crop&w=800&q=80" class="img-fluid rounded-3 shadow" alt="Consulting team">
+        </div>
+        <div class="col-md-6 mt-4 mt-md-0" data-aos="fade-left">
+          <h4>Tailored Solutions, Real Results</h4>
+          <p>At JMRV Solutions, we combine deep industry expertise with innovative thinking to help organizations of all sizes achieve measurable success. Whether optimizing workflows, improving customer engagement, or crafting long-term strategies — we deliver solutions that work.</p>
+        </div>
+      </div>
+    </div>
   </section>
 
-  <footer>
-    &copy; 2025 JMRV Solutions. All rights reserved.
+  <!-- Testimonials -->
+  <section id="testimonials" class="py-5" data-aos="fade-up">
+    <div class="container">
+      <h2 class="section-title">What Our Clients Say</h2>
+      <div class="row g-4">
+        <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+          <div class="card shadow-sm p-4 border-0">
+            <p>“JMRV Solutions transformed the way we operate. Their insights were invaluable.”</p>
+            <h6 class="fw-bold mt-3 mb-0">— Sarah L., COO, FinServe</h6>
+          </div>
+        </div>
+        <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+          <div class="card shadow-sm p-4 border-0">
+            <p>“Highly professional and results-driven. We saw immediate improvement.”</p>
+            <h6 class="fw-bold mt-3 mb-0">— Daniel R., CEO, ApexTech</h6>
+          </div>
+        </div>
+        <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+          <div class="card shadow-sm p-4 border-0">
+            <p>“Their consultative approach made all the difference — a true partner in growth.”</p>
+            <h6 class="fw-bold mt-3 mb-0">— Maria P., Founder, Lumina Brands</h6>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer id="footer" data-aos="fade-up">
+    <div class="container">
+      <p class="mb-2">&copy; 2025 JMRV Solutions. All rights reserved.</p>
+      <p class="mb-1">📧 Contact us: <a href="mailto:hello@jmrvsolutions.com" id="emailLink" class="text-white text-decoration-underline">hello@jmrvsolutions.com</a></p>
+      <p>
+        <a href="#" class="text-white text-decoration-none me-3">Privacy Policy</a>
+        <a href="#" class="text-white text-decoration-none">Terms of Service</a>
+      </p>
+    </div>
   </footer>
 
+  <!-- Scroll to Top Button -->
+  <button id="scrollTopBtn" title="Go to top">↑</button>
+  <div class="copy-toast" id="copyToast">Copied to clipboard!</div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    AOS.init({ duration: 1000, once: true });
+
+    const scrollTopBtn = document.getElementById('scrollTopBtn');
+    window.onscroll = function() {
+      if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+        scrollTopBtn.style.display = 'block';
+      } else {
+        scrollTopBtn.style.display = 'none';
+      }
+    };
+    scrollTopBtn.addEventListener('click', function() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    const emailLink = document.getElementById('emailLink');
+    const copyToast = document.getElementById('copyToast');
+    emailLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      navigator.clipboard.writeText('hello@jmrvsolutions.com').then(() => {
+        copyToast.classList.add('show');
+        setTimeout(() => copyToast.classList.remove('show'), 2000);
+      });
+    });
+  </script>
 </body>
 </html>
