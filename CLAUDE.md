@@ -33,28 +33,46 @@ deploy setup).
 ## Current structure
 
 - `index.html` — all page markup and content
-- `styles.css` — all page styles
-- `script.js` — small interactive bits (scroll-to-top button, AOS init,
-  copy-email-to-clipboard, dynamic footer year)
-- Uses Bootstrap 5 and AOS (scroll animations) via CDN `<link>`/`<script>`
-  tags — not npm packages, just direct CDN includes.
+- `styles.css` — small custom CSS that Tailwind's utility classes can't
+  express (fade-in-up scroll reveal, ghost-border gradient outline,
+  neon-glow box-shadows, the floating-logo keyframe animation, and the
+  Material Symbols icon-font base rule — Google's font `<link>` only
+  ships `@font-face`, not the class that turns ligature text into icons)
+- `script.js` — small interactive bits (scroll-to-top button,
+  copy-email-to-clipboard, dynamic footer year, mobile hamburger-menu
+  toggle, fade-in-up IntersectionObserver)
+- Uses **Tailwind CDN** (`cdn.tailwindcss.com`, with an inline
+  `tailwind.config` script for theme colors/type/spacing) and Google
+  Fonts (Space Grotesk, Geist, JetBrains Mono, Material Symbols) via
+  CDN `<script>`/`<link>` tags — not npm packages, still zero build step.
 - `JMRV_Logo.png`, `favicon-*.png` — static assets, referenced directly.
+- `DESIGN.md` — the design-system source (colors, type scale, spacing,
+  component/elevation rules) the current dark "Obsidian Nexus" theme is
+  built from. Treat it as the palette/typography reference for any
+  future visual work — check it before inventing new colors ad hoc.
 
-As of the last refactor (see git log), the original single-file version
-with everything inlined was split into the three files above, plus small
-accessibility fixes (ARIA labels on the nav toggle/scroll button/toast,
-fixed a heading-hierarchy skip in the testimonials, dynamic copyright
-year). No content or visual changes were made in that pass.
+As of the overhaul in August 2026, the site moved from a light
+Bootstrap+AOS "brochure" layout to a dark, minimal Tailwind-CDN theme
+(hero + three short concept sections + footer), based on a template the
+owner supplied and `DESIGN.md`'s palette. Real logo in the hero, existing
+favicons kept as-is, testimonials/features/services sections dropped
+intentionally (see Roadmap).
 
 ## Roadmap (not yet built)
 
 1. **Contact form** — replace the `mailto:` link in the footer with a real
    form. Likely candidates: Formspree or a similar service that doesn't
    need a backend, to stay consistent with the no-build-step approach.
-2. **Content updates** — the current copy (features, testimonials, "what
-   we do" section) is placeholder-ish and the owner intends to revise it,
-   possibly with help from Claude or external design tools.
-3. Nothing beyond this is committed to yet — check with the owner before
+2. **Better copy for the concept sections** — "Strategic Dominance" /
+   "Systemic Evolution" / "The New Intelligence" are the placeholder
+   headlines/body copy from the template used to rebuild the site. The
+   owner intends to revisit these with real JMRV-specific messaging.
+3. **Expand the hamburger menu** — right now the mobile nav only holds a
+   single "Contact" link (see `#mobileMenu` in `index.html`, toggle logic
+   in `script.js`). As more sections get added back to the page, the
+   owner wants to explore attaching them to this nav/hamburger menu
+   rather than leaving it single-purpose.
+4. Nothing beyond this is committed to yet — check with the owner before
    assuming scope (e.g. blog, CMS, booking widget) is in play.
 
 ## Git identity
