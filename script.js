@@ -1,3 +1,45 @@
+(() => {
+  const canvas = document.getElementById('starfield');
+  const ctx = canvas.getContext('2d');
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  let stars = [];
+  let width, height;
+
+  function resize() {
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+    const count = Math.round((width * height) / 6000);
+    stars = Array.from({ length: count }, () => ({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      radius: Math.random() * 1.2 + 0.3,
+      baseAlpha: Math.random() * 0.5 + 0.3,
+      twinkleSpeed: Math.random() * 0.02 + 0.005,
+      twinklePhase: Math.random() * Math.PI * 2,
+      driftSpeed: Math.random() * 0.05 + 0.01
+    }));
+  }
+
+  function draw(time) {
+    ctx.clearRect(0, 0, width, height);
+    for (const star of stars) {
+      star.y += star.driftSpeed;
+      if (star.y > height) star.y = 0;
+      const twinkle = Math.sin(time * star.twinkleSpeed + star.twinklePhase) * 0.3;
+      ctx.beginPath();
+      ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(138, 235, 255, ${Math.max(0, star.baseAlpha + twinkle)})`;
+      ctx.fill();
+    }
+    if (!prefersReducedMotion) requestAnimationFrame(draw);
+  }
+
+  resize();
+  window.addEventListener('resize', resize);
+  requestAnimationFrame(draw);
+})();
+
 const menuToggle = document.getElementById('menuToggle');
 const menuIcon = document.getElementById('menuIcon');
 const mobileMenu = document.getElementById('mobileMenu');
