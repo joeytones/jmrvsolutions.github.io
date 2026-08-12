@@ -40,6 +40,73 @@
   requestAnimationFrame(draw);
 })();
 
+(() => {
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const hasFinePointer = window.matchMedia('(pointer: fine)').matches;
+  if (prefersReducedMotion || !hasFinePointer) return;
+
+  const canvas = document.getElementById('cursorFx');
+  const ctx = canvas.getContext('2d');
+
+  let width, height;
+  function resize() {
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  const target = { x: width / 2, y: height / 2 };
+  const glow = { x: target.x, y: target.y };
+  let active = false;
+  const trail = [];
+  const maxTrailPoints = 24;
+
+  window.addEventListener('mousemove', (e) => {
+    target.x = e.clientX;
+    target.y = e.clientY;
+    active = true;
+  });
+
+  window.addEventListener('mouseleave', () => {
+    active = false;
+  });
+
+  function draw() {
+    ctx.clearRect(0, 0, width, height);
+
+    if (active) {
+      glow.x += (target.x - glow.x) * 0.15;
+      glow.y += (target.y - glow.y) * 0.15;
+
+      trail.push({ x: glow.x, y: glow.y, age: 0 });
+      if (trail.length > maxTrailPoints) trail.shift();
+
+      for (const point of trail) {
+        const lifeRatio = 1 - point.age / maxTrailPoints;
+        const radius = lifeRatio * 4;
+        ctx.beginPath();
+        ctx.arc(point.x, point.y, Math.max(radius, 0), 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(138, 235, 255, ${lifeRatio * 0.35})`;
+        ctx.fill();
+        point.age += 1;
+      }
+
+      const gradient = ctx.createRadialGradient(glow.x, glow.y, 0, glow.x, glow.y, 60);
+      gradient.addColorStop(0, 'rgba(138, 235, 255, 0.25)');
+      gradient.addColorStop(1, 'rgba(138, 235, 255, 0)');
+      ctx.fillStyle = gradient;
+      ctx.beginPath();
+      ctx.arc(glow.x, glow.y, 60, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    requestAnimationFrame(draw);
+  }
+
+  requestAnimationFrame(draw);
+})();
+
 const menuToggle = document.getElementById('menuToggle');
 const menuIcon = document.getElementById('menuIcon');
 const mobileMenu = document.getElementById('mobileMenu');
